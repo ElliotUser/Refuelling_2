@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Refuelling</string>
+    <string name="TextView">Требуемое кол-во топлива на полёт(kg)</string>
+    <string name="remainingFuelInKg">Остаток(kg)</string>
+    <string name="remainingFuelILiters">Остаток(l)</string>
+    <string name="density">Плотность</string>
+    <string name="theAmountOfFuelInTheTanksAtTheMoment">Кол-во топлива в баках после посадки(kg)</string>
+    <string name="fuelRequiredForInjectionInLitres">Требуемое кол-во топлива для закачки(l)</string>
+    <string name="noFuel">0</string>
+    <string name="distributedAmountOfFuelInTanks">Распределенное кол-во топлива в баках</string>
+    <string name="calculation">Расчет</string>
+
+
+</resources>
