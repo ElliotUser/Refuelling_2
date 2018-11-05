@@ -3,6 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="fuelGreen">#15ff00</color>
-    <color name="background">#b4b2b2</color>
+    <color name="fuelGreen">#fcfdfc</color>
+    <color name="blake">#030303</color>
+    <color name="fuel">#efad13</color>
+    <color name="green">#8cd252</color>
+    <color name="gray">#e6e4e4</color>
+    <color name="blue">#00f2ff</color>
 </resources>
