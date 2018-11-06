@@ -105,9 +105,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 resultInKg = (rightAmInKg-(leftWing+centralTank+rightWing));
                 resultInLiters = (rightAmInKg-(leftWing+centralTank+rightWing))/denst;
 
-                resultLeftTank = (float)(resultInKg*0.18);
-                resultRightTank = (float)(resultInKg*0.18);
-                resultCentralTank = (float) (resultInKg-(resultLeftTank+resultRightTank));
+                resultLeftTank = (float)(rightAmInKg*0.18);
+                resultRightTank = resultLeftTank;
+                resultCentralTank = (rightAmInKg-(resultLeftTank+resultRightTank));
                 break;
 
             case R.id.buttonClear:
