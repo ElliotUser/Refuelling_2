@@ -6,7 +6,7 @@
     <string name="density">Плотность</string>
     <string name="theAmountOfFuelInTheTanksAtTheMoment">Остаток топлива в баках(kg)</string>
     <string name="fuelRequiredForInjectionInLitres">Требуемое кол-во топлива для заправки</string>
-    <string name="noFuel">0.0</string>
+    <string name="noFuel">0</string>
     <string name="distributedAmountOfFuelInTanks">Распределенное кол-во топлива в баках(Kg)</string>
     <string name="calculation">Расчет</string>
     <string name="Clear">Сброс</string>
