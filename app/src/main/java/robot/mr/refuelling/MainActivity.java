@@ -1,16 +1,18 @@
 package robot.mr.refuelling;
 
-import android.app.Dialog;
+
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    EditText rightAmountInKg;
+    public final float MAX_FUEL_IN_ONE_WING = 3780;
+    EditText rightAmountInKilograms;
     EditText theRemainingFuelInTheRightWing;
     EditText fuelRemainingInTheCentralTank;
     EditText theRemainingFuelInTheLeftWing;
@@ -28,15 +30,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     TextView rightWingTank;
     TextView centralWingTank;
 
-    String oper = "";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //находим элементы
-        rightAmountInKg = (EditText) findViewById(R.id.rightAmountInKg);
+        rightAmountInKilograms = (EditText) findViewById(R.id.rightAmountInKg);
         theRemainingFuelInTheLeftWing = (EditText) findViewById(R.id.theRemainingFuelInTheLeftWing);
         theRemainingFuelInTheRightWing = (EditText) findViewById(R.id.theRemainingFuelInTheRightWing);
         fuelRemainingInTheCentralTank = (EditText) findViewById(R.id.fuelRemainingInTheCentralTank);
@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         fuelRemainingInLiters = (TextView) findViewById(R.id.fuelRemainingInLiters);
         theAmountOfFuelToRefuelInLiters = (TextView) findViewById(R.id.theAmountOfFuelToRefuelInLiters);
         theAmountOfFuelToRefuelInKg = (TextView) findViewById(R.id.theAmountOfFuelToRefuelInKg);
+
         leftWingTank = (TextView) findViewById(R.id.leftWing);
         rightWingTank = (TextView) findViewById(R.id.rightWing);
         centralWingTank = (TextView) findViewById(R.id.centralTank);
@@ -61,99 +62,155 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        //TODO Auto-generated method stub
-        float rightAmInKg = 0  ;
+        //TODO мне не нравятся имена переменн, исправить обязательно!
+        //todo исправить имя всех переменных, так как они очень похожи с объектами
+        float rightAmountInKg = 0  ;
         float leftWing = 0;
         float centralTank = 0;
         float rightWing = 0;
-        float denst = 0;
+        float density = 0;
 
         float resultRemainingFuelInKilograms = 0;
         float resultRemainingFuelInLiters = 0;
         float resultInKg = 0;
         float resultInLiters = 0;
 
-        float resultCentralTank = rightAmInKg;
+        float resultCentralTank = rightAmountInKg;
         float resultRightTank=0;
         float resultLeftTank=0;
 
-        //если количество требуемого топлива равно 0
-        if(TextUtils.isEmpty(rightAmountInKg.getText().toString())){
-            rightAmInKg = 0;
-        }else
-            rightAmInKg = Float.parseFloat(rightAmountInKg.getText().toString());
 
 
-        //если пустой левый бак
-        if(TextUtils.isEmpty(theRemainingFuelInTheLeftWing.getText().toString())){
-            leftWing = 0;
-        }else
-            leftWing = Float.parseFloat(theRemainingFuelInTheLeftWing.getText().toString());
+        EmptyCell emptyCell = new EmptyCell(theRemainingFuelInTheLeftWing,leftWing);
+        EmptyCell emptyCell1 = new EmptyCell(fuelRemainingInTheCentralTank,centralTank);
+        EmptyCell emptyCell2 = new EmptyCell(theRemainingFuelInTheRightWing,rightWing);
+        EmptyCell emptyCell3 = new EmptyCell(rightAmountInKilograms,rightAmountInKg);
+        EmptyCell emptyCell4 = new EmptyCell(densityID,density);
 
+        //todo выбрать имя переменным(проверка на пустоту)
+        leftWing = emptyCell.checkForEmpty();
+        centralTank = emptyCell1.checkForEmpty();
+        rightWing = emptyCell2.checkForEmpty();
+        rightAmountInKg = emptyCell3.checkForEmpty();
+        density = emptyCell4.checkForEmpty();
 
-        //если пустой центральный бак
-        if(TextUtils.isEmpty(fuelRemainingInTheCentralTank.getText().toString())){
-            centralTank = 0;
-        }else
-            centralTank = Float.parseFloat(fuelRemainingInTheCentralTank.getText().toString());
-
-
-        //если пустой правый бак
-        if(TextUtils.isEmpty(theRemainingFuelInTheRightWing.getText().toString())){
-            rightWing = 0;
-        }else
-            rightWing = Float.parseFloat(theRemainingFuelInTheRightWing.getText().toString());
-
-//        //Если плотность не введина вывести окно с предупреждением."УКАЖИТЕ ПЛОТНОСТЬ ТОПЛИВА!"
-//        if(TextUtils.isEmpty(densityID.getText().toString())){
-//            Dialog dialog = new Dialog(this);
-//
-//            dialog.setContentView(R.layout.custom_dialog);
-//            dialog.setTitle("Custom Alert Dialog");
-//
-//            final EditText editText = (EditText) dialog.findViewById(R.id.editText);
-//            Button btnSave          = (Button) dialog.findViewById(R.id.save);
-//            Button btnCancel        = (Button) dialog.findViewById(R.id.cancel);
-//            dialog.show();
-//        }
-        if(TextUtils.isEmpty(densityID.getText().toString())){
-            denst = 0;
-        }else
-            denst = Float.parseFloat(densityID.getText().toString());
+        DistributionOfTheFuelInTheTanks boeing737 = new DistributionOfTheFuelInTheTanks(MAX_FUEL_IN_ONE_WING,rightAmountInKg);
+        CalculationOfFuel calculationBoeing737 = new CalculationOfFuel(leftWing,centralTank,rightWing,density,rightAmountInKg);
 
 
         switch(v.getId()){
             case R.id.buttonResult:
-                resultRemainingFuelInKilograms = leftWing+centralTank+rightWing;
-                resultRemainingFuelInLiters = (leftWing+centralTank+rightWing)/denst;
-                resultInKg = (rightAmInKg-(leftWing+centralTank+rightWing));
-                resultInLiters = (rightAmInKg-(leftWing+centralTank+rightWing))/denst;
+                if(rightAmountInKg == 0 || rightAmountInKg < 1|| rightAmountInKg >21000) {
+                    resultRemainingFuelInLiters = 0;
+                    resultRemainingFuelInKilograms = 0;
+                    resultInKg = 0;
+                    resultInLiters = 0;
+                    leftWing = 0;
+                    rightWing = 0;
+                    centralTank = 0;
+                    rightAmountInKilograms.setText("");
 
-                //Делим на все баки(в Boeing 737 в крыло вмещается 3780 кг топлива, а макс = 21000 кг
-                // для всего самолета.)
-                resultCentralTank = rightAmInKg;
-                resultRightTank=0;
-                resultLeftTank=0;
 
-                for(float i = 0; i <=resultCentralTank ; i++) {
-                    if(i==7560 && resultCentralTank >7560){
-                        resultLeftTank=i/2;
-                        resultRightTank=resultLeftTank;
-                        resultCentralTank=resultCentralTank-i;
-                    }else if(i==7560 && resultCentralTank == 7560){
-                        resultLeftTank=i/2;
-                        resultRightTank=resultLeftTank;
-                        resultCentralTank=0;
-                    }else if(resultCentralTank<7560) {
-                        resultLeftTank = resultCentralTank / 2;
-                        resultRightTank = resultLeftTank;
-                        resultCentralTank = 0;
-                    }
+
+                    AlertDialog.Builder windowForRightAmountInKg = new AlertDialog.Builder(MainActivity.this);
+                    windowForRightAmountInKg.setTitle("Некоректный ввод данных!").setIcon(R.drawable.cross).setMessage("Введите требуемое количество топлива в диапазоне от 0 до 21000!").setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertForRightAmountInKg = windowForRightAmountInKg.create();
+                    alertForRightAmountInKg.show();
+
+                }else if(density == 0 || density <= 0.699 || density > 0.9) {
+                    resultRemainingFuelInLiters = 0;
+                    resultRemainingFuelInKilograms = 0;
+                    resultInKg = 0;
+                    resultInLiters = 0;
+                    leftWing = 0;
+                    rightWing = 0;
+                    centralTank = 0;
+                    densityID.setText("");
+
+
+                    AlertDialog.Builder windowForDensity = new AlertDialog.Builder(MainActivity.this);
+                    windowForDensity.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Введите плотность в диапазоне от 0.7 до 0.9!").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertForDensity = windowForDensity.create();
+                    alertForDensity.show();
+
+                }else if(leftWing < 0 || leftWing > 3780) {
+                    leftWingTank.setText("");
+                    AlertDialog.Builder windowLeftWing = new AlertDialog.Builder(MainActivity.this);
+                    windowLeftWing.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Максимальная вместимость топлива в левом баке 3780 kg.").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertLeftWing = windowLeftWing.create();
+                    alertLeftWing.show();
+
+                }else if(rightWing < 0 || rightWing > 3780) {
+                    rightWingTank.setText("");
+                    AlertDialog.Builder windowRightWing = new AlertDialog.Builder(MainActivity.this);
+                    windowRightWing.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Максимальная вместимость топлива в правом баке 3780 kg.").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertRightWing = windowRightWing.create();
+                    alertRightWing.show();
+
+                }else if(centralTank < 0 || centralTank > 13440) {
+                    centralWingTank.setText("");
+                    AlertDialog.Builder windowCentralTank = new AlertDialog.Builder(MainActivity.this);
+                    windowCentralTank.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Максимальная вместимость топлива в центральном баке 13440 kg.").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertCentralTank = windowCentralTank.create();
+                    alertCentralTank.show();
+
+                }else if(calculationBoeing737.resultRemainingFuelInKilograms()>rightAmountInKg) {
+                    float negativ = calculationBoeing737.resultRemainingFuelInKilograms()-rightAmountInKg;
+                    rightAmountInKilograms.setText("");
+                    centralWingTank.setText("");
+                    AlertDialog.Builder windowForDensity = new AlertDialog.Builder(MainActivity.this);
+                    windowForDensity.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Сумма топлива во всех баках привышает требуемое количество на "+negativ+" kg!").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+                    AlertDialog alertForDensity = windowForDensity.create();
+                    alertForDensity.show();
+
+                }else {
+                    resultRemainingFuelInKilograms = calculationBoeing737.resultRemainingFuelInKilograms();
+                    resultRemainingFuelInLiters = calculationBoeing737.resultRemainingFuelInLiters();
+                    resultInKg = calculationBoeing737.resultInKg();
+                    resultInLiters = calculationBoeing737.resultInLiters();
+
+                    boeing737.distributeFuelInTanks();
+                    leftWing = boeing737.getWingLeftTank();
+                    rightWing = boeing737.getWingRightTank();
+                    centralTank = boeing737.getCentralTank();
+
+                    rightWingTank.setCursorVisible(true);
                 }
                 break;
 
             case R.id.buttonClear:
-                rightAmountInKg.setText("");
+
+                rightAmountInKilograms.setText("");
                 theRemainingFuelInTheRightWing.setText("");
                 fuelRemainingInTheCentralTank.setText("");
                 theRemainingFuelInTheLeftWing.setText("");
@@ -163,6 +220,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 resultRemainingFuelInLiters = 0;
                 resultInKg = 0;
                 resultInLiters = 0;
+                leftWing = 0;
+                rightWing = 0;
+                centralTank = 0;
 
                 leftWingTank.setText("");
                 rightWingTank.setText("");
@@ -180,9 +240,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //ОБРАТИТЬ ВНИМАНИЕ ЧТО ДАННЫЙ РАСЧЕТ ИСПОЛЬЗУЕТСЯ ДЛЯ ОПРЕДЕЛЕННОГО САМОЛЕТА.(ВЫВЕСИТИ В ОТДЕЛЬНЫЙ КЛАСС?????)
         //Выводим в килограммах для всех баков в самолете
-        leftWingTank.setText(resultLeftTank+"");
-        rightWingTank.setText(resultRightTank+"");
-        centralWingTank.setText(resultCentralTank+"");
+        leftWingTank.setText(leftWing+"");
+        rightWingTank.setText(rightWing+"");
+        centralWingTank.setText(centralTank+"");
 
     }
 }
