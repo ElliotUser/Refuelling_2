@@ -1,6 +1,7 @@
 package robot.mr.refuelling;
 
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     TextView leftWingTank;
     TextView rightWingTank;
-    TextView centralWingTank;
+    TextView centralTank;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,23 +37,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         //находим элементы
-        rightAmountInKilograms = (EditText) findViewById(R.id.rightAmountInKg);
-        theRemainingFuelInTheLeftWing = (EditText) findViewById(R.id.theRemainingFuelInTheLeftWing);
-        theRemainingFuelInTheRightWing = (EditText) findViewById(R.id.theRemainingFuelInTheRightWing);
-        fuelRemainingInTheCentralTank = (EditText) findViewById(R.id.fuelRemainingInTheCentralTank);
-        densityID = (EditText) findViewById(R.id.densityID);
+        rightAmountInKilograms = findViewById(R.id.rightAmountInKg);
+        theRemainingFuelInTheLeftWing = findViewById(R.id.theRemainingFuelInTheLeftWing);
+        theRemainingFuelInTheRightWing = findViewById(R.id.theRemainingFuelInTheRightWing);
+        fuelRemainingInTheCentralTank = findViewById(R.id.fuelRemainingInTheCentralTank);
+        densityID = findViewById(R.id.densityID);
 
-        buttonResult = (Button)findViewById(R.id.buttonResult);
-        buttonClear = (Button)findViewById(R.id.buttonClear);
+        buttonResult = findViewById(R.id.buttonResult);
+        buttonClear = findViewById(R.id.buttonClear);
 
-        theRemainingFuelInKilograms = (TextView) findViewById(R.id.theRemainingFuelInKilograms);
-        fuelRemainingInLiters = (TextView) findViewById(R.id.fuelRemainingInLiters);
-        theAmountOfFuelToRefuelInLiters = (TextView) findViewById(R.id.theAmountOfFuelToRefuelInLiters);
-        theAmountOfFuelToRefuelInKg = (TextView) findViewById(R.id.theAmountOfFuelToRefuelInKg);
+        theRemainingFuelInKilograms = findViewById(R.id.theRemainingFuelInKilograms);
+        fuelRemainingInLiters = findViewById(R.id.fuelRemainingInLiters);
+        theAmountOfFuelToRefuelInLiters = findViewById(R.id.theAmountOfFuelToRefuelInLiters);
+        theAmountOfFuelToRefuelInKg = findViewById(R.id.theAmountOfFuelToRefuelInKg);
 
-        leftWingTank = (TextView) findViewById(R.id.leftWing);
-        rightWingTank = (TextView) findViewById(R.id.rightWing);
-        centralWingTank = (TextView) findViewById(R.id.centralTank);
+        leftWingTank = findViewById(R.id.leftWing);
+        rightWingTank = findViewById(R.id.rightWing);
+        centralTank = findViewById(R.id.centralTank);
 
         //прописываем обработчик
         buttonResult.setOnClickListener(this);
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
         //TODO мне не нравятся имена переменн, исправить обязательно!
@@ -74,12 +76,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         float resultRemainingFuelInLiters = 0;
         float resultInKg = 0;
         float resultInLiters = 0;
-
-        float resultCentralTank = rightAmountInKg;
-        float resultRightTank=0;
-        float resultLeftTank=0;
-
-
 
         EmptyCell emptyCell = new EmptyCell(theRemainingFuelInTheLeftWing,leftWing);
         EmptyCell emptyCell1 = new EmptyCell(fuelRemainingInTheCentralTank,centralTank);
@@ -168,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     alertRightWing.show();
 
                 }else if(centralTank < 0 || centralTank > 13440) {
-                    centralWingTank.setText("");
+                    fuelRemainingInTheCentralTank.setText("");
                     AlertDialog.Builder windowCentralTank = new AlertDialog.Builder(MainActivity.this);
                     windowCentralTank.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Максимальная вместимость топлива в центральном баке 13440 kg.").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
@@ -182,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }else if(calculationBoeing737.resultRemainingFuelInKilograms()>rightAmountInKg) {
                     float negativ = calculationBoeing737.resultRemainingFuelInKilograms()-rightAmountInKg;
                     rightAmountInKilograms.setText("");
-                    centralWingTank.setText("");
+                    this.centralTank.setText("");
                     AlertDialog.Builder windowForDensity = new AlertDialog.Builder(MainActivity.this);
                     windowForDensity.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Сумма топлива во всех баках привышает требуемое количество на "+negativ+" kg!").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
@@ -226,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 leftWingTank.setText("");
                 rightWingTank.setText("");
-                centralWingTank.setText("");
+                this.centralTank.setText("");
                 break;
                 default:
                     break;
@@ -242,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Выводим в килограммах для всех баков в самолете
         leftWingTank.setText(leftWing+"");
         rightWingTank.setText(rightWing+"");
-        centralWingTank.setText(centralTank+"");
+        this.centralTank.setText(centralTank+"");
 
     }
 }
