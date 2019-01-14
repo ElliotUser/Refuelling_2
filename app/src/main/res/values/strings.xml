@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">Refuelling</string>
-    <string name="TextView">Требуемое кол-во топлива(kg)</string>
+    <string name="TextView">Требуемое кол-во топлива на полет(kg)</string>
     <string name="remainingFuelInKg">Остаток</string>
     <string name="remainingFuelILiters">Остаток</string>
     <string name="density">Плотность</string>
     <string name="theAmountOfFuelInTheTanksAtTheMoment">Остаток топлива в баках(kg)</string>
     <string name="fuelRequiredForInjectionInLitres">Требуемое кол-во топлива для заправки</string>
-    <string name="noFuel">0</string>
-    <string name="distributedAmountOfFuelInTanks">Распределенное кол-во топлива в баках(Kg)</string>
+    <string name="noFuel">0.0</string>
+    <string name="distributedAmountOfFuelInTanks">Распределенное кол-во топлива по бакам(Kg)</string>
     <string name="calculation">Расчет</string>
     <string name="Clear">Сброс</string>
     <string name="LeftTank">Left tank</string>
@@ -17,11 +17,8 @@
     <string name="Liters">Liters</string>
 
     <string-array name="aircraft">
-        <item>Select the type of aircraft</item>
-        <item>Airbus a319</item>
-        <item>Boeing 737</item>
-        <item>Boeing 747</item>
-        <item>Boeing 777</item>
+        //ввести нужные значения позже
+        <item>Boeing 737-800</item>
     </string-array>
 
 

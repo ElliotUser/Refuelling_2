@@ -1,5 +1,7 @@
 package robot.mr.refuelling;
 
+import java.math.BigDecimal;
+
 public class CalculationOfFuel {
     private float leftWing;
     private float centralTank;
