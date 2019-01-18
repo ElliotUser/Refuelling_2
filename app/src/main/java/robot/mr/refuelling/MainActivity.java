@@ -12,7 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    public final float MAX_FUEL_IN_ONE_WING = 3780;
+
+    public final float MAX_FUEL_IN_ONE_WING = 3915; //+48 (3896)
+    public final float MAX_FUEL_IN_CENTRAL_TANK = 13066;
+    public final float TOTAL_FUEL = 20800; //2896
+    public final float TOTAL_FUEL_MAX = 20896; // возможно ввести, но нужно отнять 96 и разделить поровно по крыльевым бакам
+
     EditText rightAmountInKilograms;
     EditText theRemainingFuelInTheRightWing;
     EditText fuelRemainingInTheCentralTank;
@@ -96,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch(v.getId()){
             case R.id.buttonResult:
-                if(rightAmountInKg < 1|| rightAmountInKg >21000) {
+                if(rightAmountInKg < 1 || rightAmountInKg > TOTAL_FUEL_MAX) {
                     resultRemainingFuelInLiters = 0;
                     resultRemainingFuelInKilograms = 0;
                     resultInKg = 0;
@@ -105,10 +110,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     leftWing = 0;
                     rightWing = 0;
                     centralTank = 0;
+                    densityID.setText("");
                     rightAmountInKilograms.setText("");
 
                     AlertDialog.Builder windowForRightAmountInKg = new AlertDialog.Builder(MainActivity.this);
-                    windowForRightAmountInKg.setTitle("Некоректный ввод данных!").setIcon(R.drawable.cross).setMessage("Введите требуемое количество топлива!(Max = 21000 kg)").setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                    windowForRightAmountInKg.setTitle("Некоректный ввод данных!").setIcon(R.drawable.cross).setMessage("Введите требуемое количество топлива!(Max = 20896 kg)").setNeutralButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
@@ -139,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     AlertDialog alertForDensity = windowForDensity.create();
                     alertForDensity.show();
 
-                }else if(leftWing < 0 || leftWing > 3780) {
+                }else if(leftWing < 0 || leftWing > MAX_FUEL_IN_ONE_WING) {
                     resultRemainingFuelInLiters = 0;
                     resultRemainingFuelInKilograms = 0;
                     resultInKg = 0;
@@ -152,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                     AlertDialog.Builder windowLeftWing = new AlertDialog.Builder(MainActivity.this);
-                    windowLeftWing.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Максимальная вместимость топлива в левом баке 3780 kg.").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                    windowLeftWing.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Максимальная вместимость топлива в левом баке 3915 kg.").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
@@ -161,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     AlertDialog alertLeftWing = windowLeftWing.create();
                     alertLeftWing.show();
 
-                }else if(rightWing < 0 || rightWing > 3780) {
+                }else if(rightWing < 0 || rightWing > MAX_FUEL_IN_ONE_WING) {
                     resultRemainingFuelInLiters = 0;
                     resultRemainingFuelInKilograms = 0;
                     resultInKg = 0;
@@ -174,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     theRemainingFuelInTheRightWing.setText("");
 
                     AlertDialog.Builder windowRightWing = new AlertDialog.Builder(MainActivity.this);
-                    windowRightWing.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Максимальная вместимость топлива в правом баке 3780 kg.").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                    windowRightWing.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Максимальная вместимость топлива в правом баке 3915 kg.").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
@@ -183,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     AlertDialog alertRightWing = windowRightWing.create();
                     alertRightWing.show();
 
-                }else if(centralTank < 0 || centralTank > 13440) {
+                }else if(centralTank < 0 || centralTank > 13066) {
                     resultRemainingFuelInLiters = 0;
                     resultRemainingFuelInKilograms = 0;
                     resultInKg = 0;
@@ -195,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     fuelRemainingInTheCentralTank.setText("");
                     AlertDialog.Builder windowCentralTank = new AlertDialog.Builder(MainActivity.this);
-                    windowCentralTank.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Максимальная вместимость топлива в центральном баке 13440 kg.").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                    windowCentralTank.setTitle("Некорректный ввод данных!").setIcon(R.drawable.cross).setMessage("Максимальная вместимость топлива в центральном баке 13066 kg.").setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.cancel();
@@ -204,7 +210,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     AlertDialog alertCentralTank = windowCentralTank.create();
                     alertCentralTank.show();
 
+                }else if(rightAmountInKg >= 20767 && rightAmountInKg <= 20896){
+
+                            resultRemainingFuelInKilograms = calculationBoeing737.resultRemainingFuelInKilograms();
+                            resultRemainingFuelInLiters = calculationBoeing737.resultRemainingFuelInLiters();
+                            resultInKg = calculationBoeing737.resultInKg();
+                            resultInLiters = calculationBoeing737.resultInLiters();
+
+                            float excessFuel = (rightAmountInKg-20766)/2;
+                            leftWing = 3850+excessFuel;
+                            rightWing = 3850+excessFuel;
+                            centralTank = 13066;
                 }else {
+
                     resultRemainingFuelInKilograms = calculationBoeing737.resultRemainingFuelInKilograms();
                     resultRemainingFuelInLiters = calculationBoeing737.resultRemainingFuelInLiters();
                     resultInKg = calculationBoeing737.resultInKg();
@@ -244,7 +262,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         //строки вывода
-        System.out.printf("%.0f",centralTank);
         theRemainingFuelInKilograms.setText(resultRemainingFuelInKilograms+"");
         fuelRemainingInLiters.setText(resultRemainingFuelInLiters+"");
         theAmountOfFuelToRefuelInLiters.setText(resultInLiters+"");

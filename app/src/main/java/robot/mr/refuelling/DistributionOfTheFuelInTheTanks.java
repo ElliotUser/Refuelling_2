@@ -15,18 +15,22 @@ public class DistributionOfTheFuelInTheTanks {
 
     public void distributeFuelInTanks(){
         for(float i = 0; i <=maxFuelInAircraft ; i++) {
-            if(i==sumFuelWings && maxFuelInAircraft >sumFuelWings){
-                wingRightTank=i/2;
-                wingLeftTank=wingRightTank;
-                centralTank=maxFuelInAircraft-i;
-            }else if(i==sumFuelWings && maxFuelInAircraft == sumFuelWings){
-                wingRightTank=i/2;
-                wingLeftTank = wingRightTank;
-                centralTank=0;
-            }else if(maxFuelInAircraft<sumFuelWings) {
-                wingRightTank = maxFuelInAircraft / 2;
-                wingLeftTank = wingRightTank;
+
+            if(i <= 7830){ //если заправка меньеше или равна 7830,
+                            // то делим все по крыльевым бакам 3915
+                wingLeftTank = i/2;
+                wingRightTank = wingLeftTank;
                 centralTank = 0;
+            }else if(i > 7830){ //если заправка привышает 7830, то присваеваем крыльевым бакам 3850
+                                                              //и остаток присваеваем центральному баку
+                wingLeftTank = 3850;
+                wingRightTank = wingLeftTank;
+                centralTank = i-7700;
+            }else if(i >= 20767){ //если заправка превышает 20766, то делим остаток пополам и заливаем
+                                                                 //в крылья
+                wingLeftTank = 3850;
+                wingRightTank = wingLeftTank;
+                centralTank = 13066;
             }
         }
     }

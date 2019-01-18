@@ -124,8 +124,8 @@
         android:ems="10"
         android:gravity="center"
         android:hint="0"
-        android:maxLength="5"
         android:inputType="numberSigned"
+        android:maxLength="5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/barrier"
         app:layout_constraintHorizontal_bias="0.078"
@@ -181,8 +181,8 @@
         android:ems="10"
         android:gravity="center"
         android:hint="0"
-        android:maxLength="5"
         android:inputType="numberSigned"
+        android:maxLength="5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/theRemainingFuelInTheRightWing"
         app:layout_constraintStart_toEndOf="@+id/theRemainingFuelInTheLeftWing"
@@ -200,8 +200,8 @@
         android:ems="10"
         android:gravity="center"
         android:hint="0"
-        android:maxLength="4"
         android:inputType="numberSigned"
+        android:maxLength="4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -297,10 +297,10 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.095" />
+        app:layout_constraintVertical_bias="0.097" />
 
     <TextView
         android:id="@+id/textView8"
@@ -347,12 +347,10 @@
         android:background="@color/gray"
         android:text="@string/theAmountOfFuelInTheTanksAtTheMoment"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/barrier"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toTopOf="@+id/CentralTank"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.294" />
+        app:layout_constraintTop_toBottomOf="@+id/rightAmountInKg" />
 
     <TextView
         android:id="@+id/textView12"
@@ -367,10 +365,10 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.523"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.712" />
+        app:layout_constraintVertical_bias="0.704" />
 
     <TextView
         android:id="@+id/theAmountOfFuelToRefuelInLiters"
@@ -394,13 +392,13 @@
 
     <Spinner
         android:id="@+id/theTypeAircraft"
-        android:background="@color/darkblue"
         android:layout_width="240dp"
         android:layout_height="22dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/darkblue"
         android:entries="@array/aircraft"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -415,17 +413,16 @@
         android:layout_height="22dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="108dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/gray"
         android:text="@string/distributedAmountOfFuelInTanks"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.845" />
+        app:layout_constraintVertical_bias="0.843" />
 
     <EditText
         android:id="@+id/densityID"
@@ -439,8 +436,8 @@
         android:ems="10"
         android:gravity="center"
         android:hint="0.0"
-        android:maxLength="6"
         android:inputType="numberDecimal"
+        android:maxLength="6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.939"
